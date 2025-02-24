@@ -10,7 +10,7 @@
         "translations"
     ],
     "homepage": "https://github.com/ntriga/pimcore-vue-translations",
-    "license": "MIT",
+    "license": "GPLv3",
     "require": {
         "php": "^8.1",
         "pimcore/pimcore": "^11"
