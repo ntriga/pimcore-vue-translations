@@ -1,0 +1,32 @@
+{
+    "name": "ntriga/pimcore-vue-translations",
+    "description": "Package to streamline vue translations with Pimcore",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": [
+        "ntriga",
+        "pimcore",
+        "vue",
+        "translations"
+    ],
+    "homepage": "https://github.com/ntriga/pimcore-vue-translations",
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "pimcore/pimcore": "^11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ntriga\\PimcoreVueTranslations\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Joey",
+            "email": "joey@ntriga.agency",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

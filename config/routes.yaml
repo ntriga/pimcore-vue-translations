@@ -1,0 +1,4 @@
+pimcore_vue_translations:
+    resource: '../src/Controller/'
+    type: attribute
+    prefix: /translations-api
