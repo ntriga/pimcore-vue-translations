@@ -44,8 +44,8 @@ For example, in your layout template add:
 
     <script>
       // Preload the translations and current locale.
-      window.__TRANSLATIONS__ = {{ pimcore_translations(app.request.locale)|json_encode()|raw }};
-      window.__LOCALE__ = '{{ app.request.locale }}';
+      window.__TRANSLATIONS__ = {{ pimcore_translations(app.locale)|json_encode()|raw }};
+      window.__LOCALE__ = '{{ app.locale }}';
     </script>
     <script src="/build/app.js"></script>
 </body>
