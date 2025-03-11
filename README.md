@@ -88,22 +88,24 @@ After that is done, integrate a missing key handler.
 Example with i18n:
 
 ```javascript
-import axios from "axios";
 import { createI18n } from "vue-i18n";
+import axios from "axios";
 import { debounce } from "lodash";
 
 const messages = window.__TRANSLATIONS__ || { en: {} };
-const locale = window.__LOCALE__ || "en";
+const currentLocale = window.__LOCALE__ || "en";
 
 const missingKeys = new Set();
+const reportedKeys = new Set();
 
 const sendMissingKeys = debounce(() => {
     if (missingKeys.size > 0) {
         const keys = Array.from(missingKeys);
-        axios.post("/translations-api/register-missing-translations", { 
-            keys,
-            locale,
-         })
+        axios
+            .post("/translations-api/register-missing-translations", {
+                keys,
+                locale: currentLocale, // Consider using the actual current locale if it can change dynamically
+            })
             .catch((error) =>
                 console.error("Error registering missing keys:", error)
             );
@@ -111,23 +113,30 @@ const sendMissingKeys = debounce(() => {
     }
 }, 1000);
 
-const i18n = createI18n({
-    locale: locale,
-    fallbackLocale: "en",
-
-    messages,
-
-    missing: (locale, key) => {
+const handleMissingTranslation = (locale, key) => {
+    if (!reportedKeys.has(key)) {
         console.warn(
             `Missing translation key: "${key}" for locale "${locale}"`
         );
-
+        reportedKeys.add(key);
         missingKeys.add(key);
         sendMissingKeys();
+    }
+    // Fallback: return the key itself if no translation is found
+    return key;
+};
 
-        return key;
-    },
+const i18n = createI18n({
+    legacy: false,
+    locale: currentLocale,
+    fallbackLocale: "en",
+    messages,
+    missing: handleMissingTranslation,
 });
+
+export function setLocale(locale) {
+    i18n.global.locale = locale;
+}
 
 export default i18n;
 ```
