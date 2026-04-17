@@ -19,7 +19,6 @@ services:
     Ntriga\PimcoreVueTranslations\Service\TranslationService:
         arguments:
             $cache: '@cache.app'
-            $translator: '@translator'
             $cacheTTL: 600
 
     # ---------------------------------------------------------
@@ -27,4 +26,3 @@ services:
     # ---------------------------------------------------------
     Ntriga\PimcoreVueTranslations\Twig\Extension\PimcoreVueTranslationsExtension:
         tags: [twig.extension]
-

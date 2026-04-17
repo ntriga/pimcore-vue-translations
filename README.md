@@ -29,6 +29,7 @@ return [
 ### Getting the translations
 Inject translations into your Twig template to preload them for your Vue app.
 The package provides the `pimcore_translations` twig function that fetches the translation messages for a given language.
+When Pimcore shared translation fallbacks are configured, the package resolves that fallback chain and merges missing values into the requested locale before returning the payload.
 For example, in your layout template add:
 
 ```html
@@ -71,6 +72,10 @@ const i18n = createI18n({
 
 export default i18n;
 ```
+
+If your Pimcore system config contains a fallback like `en_GB: en_BE`, calling
+`pimcore_translations('en_GB')` will return an `en_GB` catalogue that already
+contains `en_BE` values for keys that are empty in `en_GB`.
 
 ### Registering missing translation keys
 The package provides an endpoint where you can send a single, or multiple translatation keys to to register them in the Pimcore shared translations.
@@ -140,6 +145,9 @@ export function setLocale(locale) {
 
 export default i18n;
 ```
+
+New translation keys are registered for all configured Pimcore valid languages,
+so the shared translation row is ready to be filled in from the admin UI.
 
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
